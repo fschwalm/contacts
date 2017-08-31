@@ -4,28 +4,23 @@ import * as ContactsAPI from './utils/ContactsAPI';
 
 class App extends Component {
   state = {
-    contacts: []
-  }
+    contacts: [],
+  };
   componentDidMount = () => {
     ContactsAPI.getAll().then((contacts) => {
-      this.setState({ contacts: contacts });
+      this.setState({ contacts });
     });
-  }
+  };
 
   removeContact = (contact) => {
-    this.setState((state) => ({
-      contacts: state.contacts.filter((c) => c.id !== contact.id)
-    }))
+    this.setState(state => ({
+      contacts: state.contacts.filter(c => c.id !== contact.id),
+    }));
     ContactsAPI.remove(contact);
-  }
+  };
 
   render() {
-    return (
-      <ListContacts
-        onDeleteContact={this.removeContact}
-        contacts={this.state.contacts}
-      />
-    );
+    return <ListContacts onDeleteContact={this.removeContact} contacts={this.state.contacts} />;
   }
 }
 

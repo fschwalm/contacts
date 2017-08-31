@@ -6,20 +6,20 @@ import sortBy from 'sort-by';
 class ListContacts extends React.Component {
   static propTypes = {
     contacts: PropTypes.array.isRequired,
-    onDeleteContact: PropTypes.func.isRequired
-  }
+    onDeleteContact: PropTypes.func.isRequired,
+  };
 
   state = {
-    query: ''
-  }
+    query: '',
+  };
 
   updateQuery = (query) => {
-    this.setState({ query: query.trim() })
-  }
+    this.setState({ query: query.trim() });
+  };
 
   clearQuery = () => {
-    this.setState({ query:'' });
-  }
+    this.setState({ query: '' });
+  };
 
   render() {
     const { contacts, onDeleteContact } = this.props;
@@ -28,7 +28,7 @@ class ListContacts extends React.Component {
     let showingContacts;
     if (query) {
       const match = new RegExp(escapeRegExp(query), 'i');
-      showingContacts = contacts.filter((contact) => match.test(contact.name));
+      showingContacts = contacts.filter(contact => match.test(contact.name));
     } else {
       showingContacts = contacts;
     }
@@ -36,43 +36,48 @@ class ListContacts extends React.Component {
     showingContacts.sort(sortBy('name'));
 
     return (
-      <div className='list-contacts'>
-        <div className='list-contacts-top'>
+      <div className="list-contacts">
+        <div className="list-contacts-top">
           <input
-            type='text'
-            className='search-contacts'
+            type="text"
+            className="search-contacts"
             placeholder="Search contacts"
             value={query}
-            onChange={(event) => this.updateQuery(event.target.value)}
+            onChange={event => this.updateQuery(event.target.value)}
           />
         </div>
 
         {showingContacts.length !== contacts.length && (
-          <div className='showing-contacts'>
-            <span>Now showing {showingContacts.length} of {contacts.length}</span>
+          <div className="showing-contacts">
+            <span>
+              Now showing {showingContacts.length} of {contacts.length}
+            </span>
             <button onClick={this.clearQuery}>Show all</button>
           </div>
         )}
 
-        <ol className='contact-list'>
+        <ol className="contact-list">
           {showingContacts.map(contact => (
-            <li key={contact.id} className='contact-list-item'>
-              <div className='contact-avatar' style={{
-                backgroundImage: `url(${contact.avatarURL})`
-              }}/>
-              <div className='contact-details'>
+            <li key={contact.id} className="contact-list-item">
+              <div
+                className="contact-avatar"
+                style={{
+                  backgroundImage: `url(${contact.avatarURL})`,
+                }}
+              />
+              <div className="contact-details">
                 <p>{contact.name}</p>
                 <p>{contact.email}</p>
               </div>
-              <button onClick={() => onDeleteContact(contact)} className='contact-remove'>
+              <button onClick={() => onDeleteContact(contact)} className="contact-remove">
                 Remove
               </button>
             </li>
           ))}
         </ol>
       </div>
-    )
+    );
   }
 }
 
-export default ListContacts
+export default ListContacts;
