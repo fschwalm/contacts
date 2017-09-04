@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import escapeRegExp from 'escape-string-regexp';
 import sortBy from 'sort-by';
+import { Link } from 'react-router-dom';
 
 class ListContacts extends React.Component {
   static propTypes = {
@@ -22,7 +23,7 @@ class ListContacts extends React.Component {
   };
 
   render() {
-    const { contacts, onDeleteContact, onNavigateToAddContact } = this.props;
+    const { contacts, onDeleteContact } = this.props;
     const { query } = this.state;
 
     let showingContacts;
@@ -45,9 +46,9 @@ class ListContacts extends React.Component {
             value={query}
             onChange={event => this.updateQuery(event.target.value)}
           />
-          <a href="#create" className="add-contact" onClick={() => onNavigateToAddContact()}>
+          <Link to="/create" className="add-contact" >
             Create Contact
-          </a>
+          </Link>
         </div>
 
         {showingContacts.length !== contacts.length && (
